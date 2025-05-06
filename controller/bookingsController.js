@@ -54,8 +54,6 @@ const create_booking = async (req, res) =>
             {
                 const qr_code_data = process.env.url + '/api/auth/qrCode/' + booking.qrCode;
                 const url = await qrCode.toDataURL(qr_code_data);
-                console.log("img url: ", url);
-                console.log("end of url");
 
                 const mailOptions = {
                     from: `Benjamin Odell <${process.env.email}>`,

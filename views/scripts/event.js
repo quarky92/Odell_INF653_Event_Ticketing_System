@@ -1,12 +1,20 @@
+import go_to from '/scripts/go_to.js';
 const cost = document.getElementById('cost');
 const price = document.getElementById('price').value;
 const amt = document.getElementById('amt');
+
 
 cost.textContent = '$' + amt.value * price;
 
 amt.onchange = (e) =>
 {
     cost.textContent = '$' + amt.value * price;
+}
+const back_form = document.getElementById('back');
+back_form.onsubmit = e =>
+{
+    e.preventDefault();
+    go_to('/user', back_form);
 }
 
 const form = document.getElementById('form');
@@ -43,4 +51,6 @@ form.onsubmit = async (e) =>
         window.location.href = window.location.href;
     }
 }
+
+
 

@@ -4,6 +4,7 @@ const path = require("path");
 const user_controller = require('../controller/userController');
 const event_controller = require('../controller/eventController');
 const booking_controller = require('../controller/bookingsController');
+const qrCode = require('qrcode');
 
 const auth_admin = async (req, res, next) =>
 {
@@ -129,9 +130,19 @@ router.get('/booking/:id', async (req, res) =>
             //found both a user and event
             const event_json = await event_api.json();
 
+            //get qr code
+            try
+            {
+                const qr_code_data = process.env.url + '/api/auth/qrCode/' + booking_json.qrCode;
+                const qr_code_url = await qrCode.toDataURL(qr_code_data);
 
-            return res.render(path.join(__dirname, '..', 'views', 'booking.ejs'),
-                { user: user_json, event: event_json, booking: booking_json, url: process.env.url });
+                return res.render(path.join(__dirname, '..', 'views', 'booking.ejs'),
+                    { user: user_json, event: event_json, booking: booking_json, url: process.env.url, qr_code: qr_code_url });
+            }
+            catch (err)
+            {
+                return res.sendFile(path.join(__dirname, '..', 'views', '404.html'));
+            }
         }
         else
             return res.sendFile(path.join(__dirname, '..', 'views', '404.html'));
