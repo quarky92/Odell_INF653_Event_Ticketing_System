@@ -3,6 +3,7 @@ const router = express();
 const path = require("path");
 const user_controller = require('../../controller/userController');
 const event_controller = require('../../controller/eventController');
+const booking_controller = require('../../controller/bookingsController');
 const fs = require('fs');
 
 const auth_admin = async (req, res, next) =>
@@ -71,7 +72,7 @@ router.get('/user/:token', async (req, res) =>
 
 router.delete('/events/:id', auth_admin, event_controller.remove_event);
 
-router.get('/qrCode/:code', )
+router.get('/qrCode/:code', booking_controller.validate_qr_code);
 
 
 module.exports = router;
