@@ -3,6 +3,8 @@ const Booking = require('../model/Booking');
 const jwt = require('jsonwebtoken');
 const user_controller = require('./userController');
 const event_controller = require('./eventController');
+const nodemailer = require('nodemailer');
+const qrCode = require('qrcode');
 
 const crypto = require('crypto');
 
@@ -22,6 +24,9 @@ const create_booking = async (req, res) =>
         const user = await user_controller.get_user_from_token(token);
         if (!user) return res.status(401).json({ message: "Invalid token, please login" });
 
+        //gets user email
+        const email = user.email;
+
         //update max seats 
         const updated = await event_controller.update_seats(event_id, quantity);
 
@@ -34,6 +39,52 @@ const create_booking = async (req, res) =>
                 bookingDate: date,
                 qrCode: crypto.randomBytes(64).toString('hex')
             });
+
+            //send email to user
+            const transporter = nodemailer.createTransport({
+                host: "smtp.mailersend.net",
+                port: 587,
+                auth: {
+                    user: process.env.email,
+                    pass: process.env.email_password,
+                }
+            });
+
+            try
+            {
+                const qr_code_data = process.env.url + '/api/auth/qrCode/' + booking.qrCode;
+                const url = await qrCode.toDataURL(qr_code_data);
+                console.log("img url: ", url);
+                console.log("end of url");
+
+                const mailOptions = {
+                    from: `Benjamin Odell <${process.env.email}>`,
+                    to: email,
+                    subject: "Your Booking",
+                    text: `Your booking QR code can be accessed at: ${qr_code_data}`,
+                    html: `
+            <div>
+                <h2>Your Booking Confirmation</h2>
+                <p>Thank you for your booking. Here's your QR code:</p>
+                <img src="cid:qrcode" alt="QR Code" width="500" height="500" title="QR Code" style:"display:block">
+            </div>
+        `,
+                    attachments: [{
+                        filename: 'qrcode.png',
+                        content: url.split('base64,')[1],
+                        encoding: 'base64',
+                        cid: 'qrcode'
+                    }]
+                };
+
+                const mail = await transporter.sendMail(mailOptions);
+                console.log('Email sent:', mail.messageId);
+            } catch (err)
+            {
+                console.error('Error sending email:', err);
+                // You might want to handle this error differently, maybe notify admin
+            }
+
 
             return res.status(201).json(booking);
         }

@@ -23,10 +23,10 @@
             <input type="date" name="date" id="date" required
                 value="<%=new Date(event.date).toISOString().split('T')[0]; %>">
             <input type="text" name="time" placeholder="time" value="<%=event.time%>">
-            <label for="seatCapacity">Seat Capacity: </label>
+            <label for="seatCapacity" min="1">Seat Capacity: </label>
             <input type="number" name="seatCapacity" required value="<%=event.seatCapacity%>">
             <label for="bookedSeats">Booked Seats:</label>
-            <input type="number" name="bookedSeats" id="bookedSeats" value="<%=event.bookedSeats%>">
+            <input type="number" name="bookedSeats" id="bookedSeats" value="<%=event.bookedSeats%>" min="1">
 
             <label for="price">Price: </label>
             <input type="number" name="price" required value="<%=event.price%>">
@@ -47,9 +47,9 @@
                 <input type="date" name="date" id="date" required>
                 <input type="text" name="time" placeholder="time">
                 <label for="seatCapacity">Seat Capacity: </label>
-                <input type="number" name="seatCapacity" required>
+                <input type="number" name="seatCapacity" required min="1">
                 <label for="bookedSeats">Booked Seats:</label>
-                <input type="number" name="bookedSeats" id="bookedSeats" value="0">
+                <input type="number" name="bookedSeats" id="bookedSeats" value="0" min="1">
 
                 <label for="price">Price: </label>
                 <input type="number" name="price" required>
