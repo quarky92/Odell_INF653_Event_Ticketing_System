@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= user.role == 'admin' ? 'Admin Page' : user.name %></title>
+  <script type="module" src="/scripts/user.js" defer></script>
+  <script src="/scripts/admin-bookings.js" defer></script>
+</head>
+
+<body>
+  <h1>Welcome, <%=user.name;%>
+  </h1>
+  <%- include('./event_table.ejs'); %>
+
+  <h3>Filter</h3>
+  <form action="/user" method="post" id="filter">
+    <select name="category">
+      <option selected disabled>Categories</option>
+      <!--Fills in options based on categories-->
+      <% for(const category of categories) {%>
+        <option><%=category%></option>
+        <%}%>
+    </select>
+    <input type="date" name="date" id="date">
+    <select name="location">
+      <option selected disabled>Locations</option>
+      <!--Fills in options based on locations-->
+      <% for(const location of locations) {%>
+        <option><%=location%></option>
+        <%}%>
+    </select>
+
+    <button>Filter</button>
+  </form>
+
+  <% if(user.role == 'admin') { %>
+    <form action="/new_event" method="get">
+        <button>Edit Event</button>
+    </form>
+    <form action="." method="post" id="admin_bookings">
+        <button>View Bookings</button>
+    </form>
+    <% } %>
+
+    <% if(bookings) {  %>
+      <h1>Your Bookings</h1>
+      <%-include('./bookings.ejs')%>
+      <% } %>
+
+    <button id="logout">Log Out</button>
+</body>
+
+</html>

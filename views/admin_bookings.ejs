@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="/scripts/admin_bookings.js"></script>
+    <title>Bookings</title>
+</head>
+<body>
+    <!--Get All bookings from server-->
+    <%for(const section of bookings) {%>
+        <h2><%=section.name%>:</h2>
+        <table>
+            <!--Head of table-->
+            <tr>
+                <th>Event</th>
+                <th>Name</th>
+                <th>Quantity</th>
+            </tr>
+        <!--Loop through bookings-->
+        <h2><%for(const key in section.bookings) {%></h2>
+            <tr>
+                <td><%=section.bookings[key].event.title%></td>
+                <td><%=section.bookings[key].user.name%></td>
+                <td><%=section.bookings[key].booking.quantity%></td>
+                <td><a href="/booking/<%=section.bookings[key].booking._id%>">Details</a></td>
+            </tr>
+            <%}%>
+        </table>
+    <%}%>
+    <form id="event_form">
+        <button >By Events</button>
+    </form>
+    <form id="user_form">
+        <input type="hidden" name="users" value="users">
+        <button d>By Users</button>
+    </form>
+
+    <form id="home_form">
+        <button id="home">Home</button>
+    </form>
+
+</body>
+</html>

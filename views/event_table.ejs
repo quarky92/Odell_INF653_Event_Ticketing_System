@@ -1,0 +1,34 @@
+<% if(events && events.length > 0){ %>
+  <h1>Events</h1>
+ <table>
+    <% const columns=['Title', 'Category', 'Venue' , 'Date' , 'Remaining Seats' , 'Price' ]; columns.forEach(element=>
+            {
+            %> <th>
+      <%= element %>
+    </th>
+    <%}) %>
+
+    <!--fills the table-->
+
+        <%
+        events.forEach(event=>{
+        const entry = {};
+        entry.title = event.title;
+        entry.category = event.category;
+        entry.location = event.venue;
+        entry.date = new Date(event.date).toISOString().split('T')[0];
+        entry.seats = event.seatCapacity - event.bookedSeats;
+        entry.price = event.price;
+        %>
+        
+        <tr>
+        <% for (let key in entry){ %>
+            <td><%=entry[key]%></td>
+       <% } %>
+       <td><a href="/events?id=<%=event._id%>">Details</a></td>
+        <% }); %>
+        </tr>
+    </table>
+<% } else { %>
+  <h1>No Event With current filters</h1>
+<% } %>

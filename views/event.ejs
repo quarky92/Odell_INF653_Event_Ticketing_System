@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= event.title %></title>
+    <script src="/scripts/event.js" defer></script>
+</head>
+<body>
+    <% for(let key in event) {%>
+        <h3><%= key %>:</h3> <p><%= event[key] %></p>
+        <% } %>
+
+        <form action="." id="form">
+            <input type="hidden" name="event_id" id="id" value="<%=event._id%>">"
+            <input type="hidden"  id="price" value="<%=event.price%>">
+            <input type="hidden"  id="max" value="<%=event.seatCapacity%>">
+            <input type="hidden"  id="seats" value="<%=event.bookedSeats%>">
+            <input type="number" name="quantity" value="1" id="amt" min="1">
+            <p id="cost">$</p>
+            <input type="date" name="date" required value="<%= new Date(Date.now()).toISOString().split('T')[0]%>">
+            <button>Book Tickets</button>
+        </form>
+</body>
+</html>

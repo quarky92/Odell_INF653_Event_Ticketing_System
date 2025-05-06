@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="/scripts/sign-up.js" defer></script>
+</head>
+
+<body>
+    <h1>Sign Up</h1>
+    <form action="" method="post" id="sign-up">
+        <input type="text" name="name" placeholder="name" required>
+        <input type="email" name="email" placeholder="email" required>
+        <input type="text" name="pwd" placeholder="password" required>
+
+        <label for="role">Select Role:</label>
+        <select id="role" name="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+
+        <button>Submit</button>
+    </form>
+
+    <form action="/">
+        <button>Home</button>
+    </form>
+</body>
+
+</html>

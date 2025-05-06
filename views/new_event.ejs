@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Event</title>
+    <link rel="stylesheet" href="/assets/main.css">
+    <script type="module" src="/scripts/new_event.js" defer></script>
+</head>
+
+<body>
+
+    <% events.forEach(event=> { %>
+        <!--Create a form for the element-->
+        <form action="." method="post" class="update">
+            <input type="hidden" name="id" value="<%=event._id%>">
+            <input type="text" name="name" placeholder="Event Name" required value="<%=event.title%>">
+            <input type="text" name="description" placeholder="description" value="<%=event.description%>">
+            <input type="text" name="category" placeholder="category" value="<%=event.category%>">
+            <input type=" text" name="venue" placeholder="venue" value="<%=event.venue%>">
+            <label for=" date">Date: </label>
+            <input type="date" name="date" id="date" required
+                value="<%=new Date(event.date).toISOString().split('T')[0]; %>">
+            <input type="text" name="time" placeholder="time" value="<%=event.time%>">
+            <label for="seatCapacity">Seat Capacity: </label>
+            <input type="number" name="seatCapacity" required value="<%=event.seatCapacity%>">
+            <label for="bookedSeats">Booked Seats:</label>
+            <input type="number" name="bookedSeats" id="bookedSeats" value="<%=event.bookedSeats%>">
+
+            <label for="price">Price: </label>
+            <input type="number" name="price" required value="<%=event.price%>">
+
+            <button>Update</button>
+
+            <input type="button" value="Delete" class="delete">
+        </form>
+        <% }); %>
+
+            <h1>Create New Event</h1>
+            <form action="." method="post" id="form">
+                <input type="text" name="name" placeholder="Event Name" required>
+                <input type="text" name="description" placeholder="description">
+                <input type="text" name="category" placeholder="category">
+                <input type="text" name="venue" placeholder="venue">
+                <label for="date">Date: </label>
+                <input type="date" name="date" id="date" required>
+                <input type="text" name="time" placeholder="time">
+                <label for="seatCapacity">Seat Capacity: </label>
+                <input type="number" name="seatCapacity" required>
+                <label for="bookedSeats">Booked Seats:</label>
+                <input type="number" name="bookedSeats" id="bookedSeats" value="0">
+
+                <label for="price">Price: </label>
+                <input type="number" name="price" required>
+
+                <button>Submit</button>
+            </form>
+
+            <form action="/user" method="post" id="back">
+                <button>Back</button>
+            </form>
+</body>
+
+</html>
