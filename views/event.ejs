@@ -16,6 +16,7 @@
             <input type="hidden"  id="price" value="<%=event.price%>">
             <input type="hidden"  id="max" value="<%=event.seatCapacity%>">
             <input type="hidden"  id="seats" value="<%=event.bookedSeats%>">
+            <label for="amt">Number of Tickets:</label>
             <input type="number" name="quantity" value="1" id="amt" min="1">
             <p id="cost">$</p>
             <input type="date" name="date" required value="<%= new Date(Date.now()).toISOString().split('T')[0]%>">
