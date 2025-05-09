@@ -69,7 +69,6 @@ router.post("/user", async (req, res) =>
             filters[s] = body[s];
     }
     const params = new URLSearchParams(filters).toString();
-    console.log(params);
     const events_api = await fetch(process.env.url + `/api/events?${params}`);
     const events = await events_api.json();
 

@@ -40,18 +40,26 @@ router.post('/register', async (req, res) =>
     process.env.user = user;
 
 
-    if (user['role'] == "admin ")
+
+    if (req.accepts("html"))
     {
-        const html = fs.readFileSync('../../views/admin.html', 'utf-8');
-        res.sendFile(html);
+        if (user['role'] == "admin ")
+        {
+            const html = fs.readFileSync('../../views/admin.html', 'utf-8');
+            res.sendFile(html);
+        }
+        else
+        {
+            const html = fs.readFileSync(path.join(__dirname, "..", "..", 'views', 'user.html'), 'utf-8');
+            res.send(html.replaceAll('{name}', user.name));
+        }
     }
     else
     {
-        const html = fs.readFileSync(path.join(__dirname, "..", "..", 'views', 'user.html'), 'utf-8');
-        res.send(html.replaceAll('{name}', user.name));
+        return res.json(user);
     }
 });
-
+C
 router.post('/events', event_controller.create_event);
 
 router.post('/user', user_controller.get_user);
