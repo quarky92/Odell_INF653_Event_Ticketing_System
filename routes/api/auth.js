@@ -59,7 +59,6 @@ router.post('/register', async (req, res) =>
         return res.json(user);
     }
 });
-C
 router.post('/events', event_controller.create_event);
 
 router.post('/user', user_controller.get_user);
